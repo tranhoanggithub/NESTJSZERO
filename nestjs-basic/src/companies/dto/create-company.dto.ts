@@ -16,4 +16,7 @@ export class CreateCompanyDto {
     })
     description: string;
 
+    @IsNotEmpty({message:'Logo khong duoc de trong',})
+    logo:string
+
 }

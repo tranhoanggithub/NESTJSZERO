@@ -18,12 +18,12 @@ export class FilesController {
     //   fileType: /\.(jpg|jpeg|png|image\/png|gif|txt|pdf|docx|text\/plain)$/i,
     // })
     .addMaxSizeValidator({
-      maxSize: 1024*1024
+      maxSize: 1024 * 1024
     })
     .build({
       errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
     }),) file: Express.Multer.File) {
-    return{
+    return {
       filename: file.filename,
     }
   }

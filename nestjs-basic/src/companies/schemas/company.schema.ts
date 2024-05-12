@@ -12,6 +12,9 @@ export class Company {
     @Prop()
     description: string;
 
+    @Prop()
+    logo: string;
+
     @Prop({ type: { _id: MongooseSchema.Types.ObjectId, email: String } })
     createdBy: { _id: MongooseSchema.Types.ObjectId; email: string };
 
