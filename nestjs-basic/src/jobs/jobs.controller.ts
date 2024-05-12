@@ -26,6 +26,7 @@ export class JobsController {
   }
 
   @Get()
+  @Public()
   @ResponseMessage("Fetch List Jobs with paginate")
   findAll(
     @Query("current") currentPage: string, // const currentPage = req.query.page

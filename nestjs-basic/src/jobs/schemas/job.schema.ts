@@ -14,8 +14,13 @@ export class Job {
 
     @Prop({ type: Object })
     company: {
-        _id: MongooseSchema.Types.ObjectId; name: String;
+        _id: MongooseSchema.Types.ObjectId;
+        name: String;
+        logo: string;
     };
+
+    @Prop()
+    location: string;
 
     @Prop()
     salary: number;
