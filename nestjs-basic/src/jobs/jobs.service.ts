@@ -101,8 +101,8 @@ export class JobsService {
       { _id },
       {
         deletedBy: {
-          _id:user._id,
-          email:user.email
+          _id: user._id,
+          email: user.email
         }
       }
     )

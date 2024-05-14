@@ -21,7 +21,7 @@ export class CreateResumeDto {
     jobId: Types.ObjectId;
 }
 
-export class CreateUsesCvDto {
+export class CreateUserCvDto {
     @IsNotEmpty({ message: 'url khong duoc de trong' })
     url: string;
 

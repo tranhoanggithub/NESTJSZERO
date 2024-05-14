@@ -42,7 +42,10 @@ export class Resume {
         email: string;
     }
     @Prop()
-    createdBy: Date;
+    createdBy: string;
+
+    @Prop()
+    createdAt: string;
 
     @Prop()
     updatedAt: Date;
