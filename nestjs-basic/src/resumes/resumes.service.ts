@@ -43,7 +43,7 @@ export class ResumesService {
   }
 
   async findAll(currentPage: number, limit: number, qs: string) {
-    const { filter, sort, population } = aqp(qs);
+    const { filter, sort, population , projection } = aqp(qs);
     delete filter.current;
     delete filter.pageSize;
 
@@ -51,7 +51,7 @@ export class ResumesService {
     let defaultLimit = +limit ? +limit : 10;
     const totalItems = (await this.resumeModel.find(filter)).length;
     const totalPages = Math.ceil(totalItems / defaultLimit);
-    const result = await this.resumeModel.find(filter).skip(offset).limit(defaultLimit).sort(sort as any).select('-password').populate(population).exec();
+    const result = await this.resumeModel.find(filter).skip(offset).limit(defaultLimit).sort(sort as any).select(projection as any).populate(population).exec();
 
     return {
       meta: {
