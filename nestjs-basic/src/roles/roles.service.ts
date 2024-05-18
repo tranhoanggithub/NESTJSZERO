@@ -66,10 +66,10 @@ export class RolesService {
   async update(_id: string, updateRoleDto: UpdateRoleDto, user: IUser) {
     const { name } = updateRoleDto;
 
-    const isExist = await this.roleModel.findOne({ name });
-    if (isExist && isExist._id.toString() !== _id.toString()) {
-      throw new BadRequestException(`Role với name = "${name}" đã tồn tại`);
-    }
+    // const isExist = await this.roleModel.findOne({ name });
+    // if (isExist && isExist._id.toString() !== _id.toString()) {
+    //   throw new BadRequestException(`Role với name = "${name}" đã tồn tại`);
+    // }
 
     const updated = await this.roleModel.updateOne(
       { _id },
@@ -84,11 +84,13 @@ export class RolesService {
     return updated;
   }
 
-  async remove(_id: string, user: IUser) {
-    if (!mongoose.Types.ObjectId.isValid(_id))
-      return `not found user`;
+  async remove(id: string, user: IUser) {
+    const foundRole = await this.roleModel.findById(id);
+    if (foundRole.name === "ADMIN") {
+      throw new BadRequestException("Không thể xóa role ADMIN")
+    }
     await this.roleModel.updateOne(
-      { _id },
+      { _id: id },
       {
         deletedBy: {
           _id: user._id,
@@ -97,7 +99,7 @@ export class RolesService {
       }
     )
     return this.roleModel.softDelete({
-      _id
+      id
     })
   }
 }

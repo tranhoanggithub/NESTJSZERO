@@ -73,14 +73,15 @@ export class UsersService {
       return `not found user`
     return await this.userModel.findOne({
       _id: id
-    }).select("-password") //exclude ><include
+    }).select("-password")
+      .populate({ path: "role", select: { name: 1, _id: 1 } }) //exclude ><include
   }
   // return `This action returns a #${id} user`;
 
   findOneByUserName(username: string) {
     return this.userModel.findOne({
       email: username
-    })
+    }).populate({ path: "role", select: { name: 1, permissions: 1 } })
     // return `This action returns a #${id} user`;
   }
 
@@ -108,6 +109,11 @@ export class UsersService {
     // return `This action removes a #${id} user`;
     if (!mongoose.Types.ObjectId.isValid(id))
       return `not found user`;
+
+    const foundUser = await this.userModel.findById(id);
+    if (foundUser.email === "admin@gmail.com") {
+      throw new BadRequestException(`Khong thể xóa tài khoản admin@gmail.com`)
+    }
 
     await this.userModel.updateOne(
       { _id: id },
