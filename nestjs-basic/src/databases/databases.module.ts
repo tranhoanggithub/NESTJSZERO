@@ -5,15 +5,18 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/users/schemas/user.schema';
 import { Permission, PermissionSchema } from 'src/permissions/schemas/permission.schema';
 import { Role, RoleSchema } from 'src/roles/schemas/role.schema';
+import { UsersService } from 'src/users/users.service';
 
 @Module({
   controllers: [DatabasesController],
-  providers: [DatabasesService],
-  imports: [  
+  providers: [DatabasesService, UsersService],
+  imports: [
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
       { name: Permission.name, schema: PermissionSchema },
       { name: Role.name, schema: RoleSchema },
-    ])],
+    ])
+  ],
+
 })
-export class DatabasesModule {}
+export class DatabasesModule { }
