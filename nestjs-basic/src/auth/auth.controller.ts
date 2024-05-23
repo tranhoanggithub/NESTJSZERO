@@ -6,11 +6,13 @@ import { CreateUserDto, RegisterUserDto } from 'src/users/dto/create-user.dto';
 import { IUser } from 'src/users/users.interface';
 import cookieParser from 'cookie-parser';
 import { Response as ExpressResponse } from 'express'; // Renamed Response to ExpressResponse
+import { RolesService } from 'src/roles/roles.service';
 
 @Controller("auth")
 export class AuthController {
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private rolesService: RolesService
   ) { }
 
   @Public()
@@ -45,7 +47,10 @@ export class AuthController {
 
   @ResponseMessage("Get user information")
   @Get('/account')
-  handlegetAccount(@User() user: IUser) { //req.user
+  async handlegetAccount(@User() user: IUser) {
+    const temp = await this.rolesService.findOne(user.role._id) as any;
+    user.permissions = temp.permission;
+    //req.user
     return { user };
   }
 
